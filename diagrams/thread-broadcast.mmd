@@ -1,0 +1,17 @@
+graph TD
+  M([New message saved]):::client
+  Q{"threadId set ?"}:::decision
+  T["/topic/thread/{threadId}"]:::good
+  CH["/topic/channel/{channelId}"]:::good
+  SUB([Subscribers of that topic only]):::svc
+
+  M --> Q
+  Q -->|yes| T
+  Q -->|no| CH
+  T --> SUB
+  CH --> SUB
+
+  classDef client fill:#eaf3fb,stroke:#3a63c9,stroke-width:1.5px,color:#17181c;
+  classDef decision fill:#fef3e6,stroke:#eb8829,stroke-width:1.5px,color:#17181c;
+  classDef good fill:#eef7ea,stroke:#4a9e2f,stroke-width:1.5px,color:#17181c;
+  classDef svc fill:#f4f5f7,stroke:#9a9da6,stroke-width:1.5px,color:#17181c;

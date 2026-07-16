@@ -46,6 +46,17 @@
           <li>A short allowlist of paths (login, OTP, the WebSocket handshakes) pass through unauthenticated, still stripped of any spoofed header.</li>
         </ul>
         <p>Downstream, every service reads identity through one small helper that pulls <code>X-User-Id</code> off the request — no service parses a JWT, no service owns a session. If the header's missing or malformed, that's a 401 or 400 before any business logic runs.</p>
+
+        <figure class="arch-diagram">
+          <img src="../assets/diagrams/gateway-filter.svg" alt="Gateway filter: strip, block internal, check public, validate JWT, inject" />
+          <figcaption>Every request runs this gauntlet before a service ever sees it.</figcaption>
+        </figure>
+
+        <p>Follow a real request end to end — a client even <i>trying</i> to spoof its identity gets that header stripped and replaced with the real one:</p>
+        <figure class="arch-diagram wide">
+          <img src="../assets/diagrams/identity-flow.svg" alt="Sequence: login issues a JWT, then an authenticated request is stripped, validated, and injected" />
+          <figcaption>Login issues the token; every later request is stripped, validated, and re-stamped with trusted identity.</figcaption>
+        </figure>
       </div>
     </div>
 
@@ -56,6 +67,13 @@
 
         <h3>The internal API</h3>
         <p>Some checks have to be synchronous — a chat message can't wait for an event queue to confirm the sender is still a member. Those calls go over a locked-down internal API, guarded by a shared <code>X-Internal-Token</code> header and blocked at the gateway so it's server-to-server only. Callers fail <i>closed</i>: if workspace-service is unreachable, the answer is 503, never an implicit yes.</p>
+
+        <h3>Authenticating a WebSocket, which can't carry a header</h3>
+        <p>A browser can't attach an <code>Authorization</code> header to a WebSocket handshake — so the client trades its JWT for a single-use, 60-second Redis ticket over normal HTTP first, then presents that on connect. The ticket is redeemed with an atomic <code>GETDEL</code>, so two connections racing on the same ticket can't both win.</p>
+        <figure class="arch-diagram wide">
+          <img src="../assets/diagrams/ws-ticket.svg" alt="Sequence: mint a Redis ticket over HTTP, then redeem it atomically on the WebSocket handshake" />
+          <figcaption>The ticket handshake — authenticated HTTP mints it, the WebSocket redeems it exactly once.</figcaption>
+        </figure>
       </div>
     </div>
 

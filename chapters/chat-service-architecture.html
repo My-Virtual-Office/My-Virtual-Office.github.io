@@ -45,6 +45,11 @@
           <li><b>Threads</b> — flat, one level: channel → thread → messages. A thread doesn't nest inside another thread.</li>
         </ul>
 
+        <figure class="arch-diagram">
+          <img src="../assets/diagrams/chat-datamodel.svg" alt="Entity model: Channel contains Messages and Threads; a Thread branches Messages" />
+          <figcaption>One channel document, whatever its type; threads branch off it, messages hang off both.</figcaption>
+        </figure>
+
         <h3>Two ways to reply, on purpose</h3>
         <p><code>threadId</code> means the message lives in a thread panel. <code>replyToId</code> means it's an inline quote-reply, still in the main channel. They're not the same feature wearing two names — a thread branches the conversation; a reply just points backward in one.</p>
       </div>
@@ -54,6 +59,10 @@
       <div class="feature-text">
         <h3>Real-time: one broadcast, not a fan-out guess</h3>
         <p>Every mutation — a new message, an edit, a reaction, a pin, a delete — goes out over STOMP the moment it happens. A message inside a thread broadcasts <i>only</i> to that thread's topic; it doesn't also land in the channel feed and get filtered client-side. That sounds like a small distinction; it's the difference between a thread reply that never appears where it shouldn't, and one that flashes in the main channel for a frame before disappearing.</p>
+        <figure class="arch-diagram">
+          <img src="../assets/diagrams/thread-broadcast.svg" alt="A saved message routes to exactly one topic: its thread, or its channel" />
+          <figcaption>One saved message, one topic — never both.</figcaption>
+        </figure>
         <p>The WebSocket handshake can't carry an <code>Authorization</code> header — browsers don't allow it — so the client asks for a one-time Redis-backed ticket first, then presents it on connect. The ticket is consumed atomically on redemption, so two connections racing on the same ticket can't both get in.</p>
 
         <h3>A mention is a message, once</h3>

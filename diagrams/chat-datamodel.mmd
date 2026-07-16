@@ -1,0 +1,29 @@
+erDiagram
+  CHANNEL ||--o{ MESSAGE : contains
+  CHANNEL ||--o{ THREAD : has
+  THREAD  ||--o{ MESSAGE : "branches"
+
+  CHANNEL {
+    ObjectId id
+    string type "GROUP | DIRECT | ROOM"
+    int workspaceId
+    string dmKey "min_max userIds"
+    boolean canonical
+    intList members
+  }
+  MESSAGE {
+    ObjectId id
+    ObjectId channelId
+    int senderId
+    string senderRole "captured at send"
+    ObjectId threadId
+    ObjectId replyToId
+    map reactions
+    list attachments "GridFS"
+  }
+  THREAD {
+    ObjectId id
+    ObjectId channelId
+    ObjectId rootMessageId
+    int createdBy
+  }

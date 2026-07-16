@@ -43,6 +43,10 @@
 
         <h3>Proximity voice, computed from positions</h3>
         <p>The 2D client streams avatar positions; room-service clusters the ones within hearing range using union-find, and gives every cluster of two or more its own private Agora channel. Step out of range and the next snapshot recomputes the group — only the avatars whose group actually changed get told. A named zone (a meeting room, drawn on the floor plan) overrides open-area clustering entirely: step inside one and you join that zone's channel regardless of who's standing next to you.</p>
+        <figure class="arch-diagram">
+          <img src="../assets/diagrams/proximity-voice.svg" alt="Proximity voice: zone check, then union-find clustering, then diff and switch Agora channel" />
+          <figcaption>From a stream of positions to who-hears-whom — recomputed every snapshot, broadcast only on change.</figcaption>
+        </figure>
       </div>
     </div>
 
@@ -50,6 +54,10 @@
       <div class="feature-text">
         <h3>Notifications: nine event types, one decision per type</h3>
         <p>Five services publish into a single notification pipeline, and every event carries a unique id so a retried delivery never sends twice. Each type gets exactly one routing decision, made once:</p>
+        <figure class="arch-diagram wide">
+          <img src="../assets/diagrams/notification-routing.svg" alt="Notification routing: type decides email-only, in-app-only, or both, with Redis dedup on email" />
+          <figcaption>One event in, one routing decision, then email (deduped), a live push, or both.</figcaption>
+        </figure>
         <table class="arch-table">
           <thead><tr><th>Event</th><th>Delivery</th></tr></thead>
           <tbody>

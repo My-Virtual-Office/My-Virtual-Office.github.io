@@ -1,0 +1,27 @@
+graph TD
+  POS([2D client streams<br/>avatar positions]):::client
+  ZONE{"inside a<br/>named zone ?"}:::decision
+  ZCH["Join the zone's<br/>private channel"]:::good
+  CLUSTER["Cluster nearby avatars<br/>union-find, within hearing range"]:::step
+  SIZE{"cluster of<br/>2 or more ?"}:::decision
+  PCH["Own proximity channel<br/>prox-{ws}-{userId}"]:::good
+  SILENT["No channel<br/>alone in the open"]:::db
+  DIFF["Diff vs last snapshot<br/>notify only who changed"]:::step
+  AGORA([Client switches<br/>Agora channel]):::client
+
+  POS --> ZONE
+  ZONE -->|yes| ZCH
+  ZONE -->|no| CLUSTER
+  CLUSTER --> SIZE
+  SIZE -->|yes| PCH
+  SIZE -->|no| SILENT
+  ZCH --> DIFF
+  PCH --> DIFF
+  SILENT --> DIFF
+  DIFF --> AGORA
+
+  classDef client fill:#eaf3fb,stroke:#3a63c9,stroke-width:1.5px,color:#17181c;
+  classDef decision fill:#fef3e6,stroke:#eb8829,stroke-width:1.5px,color:#17181c;
+  classDef good fill:#eef7ea,stroke:#4a9e2f,stroke-width:1.5px,color:#17181c;
+  classDef step fill:#f4f5f7,stroke:#9a9da6,stroke-width:1.5px,color:#17181c;
+  classDef db fill:#f4f5f7,stroke:#c4c6cc,stroke-width:1.5px,color:#9a9da6;

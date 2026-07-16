@@ -1,0 +1,17 @@
+sequenceDiagram
+  participant C as Browser
+  participant G as Gateway
+  participant CH as chat-service
+  participant R as Redis
+
+  C->>G: POST /api/chat/ws-ticket (Bearer JWT)
+  G->>CH: (authenticated) mint ticket
+  CH->>R: SET ticket -> userId:role (60s TTL)
+  CH-->>C: { ticket }
+
+  Note over C,R: the WebSocket handshake carries no auth header
+
+  C->>CH: WS connect ?ticket=...
+  CH->>R: GETDEL ticket (atomic, single-use)
+  R-->>CH: userId:role
+  CH-->>C: connected (identity bound to the session)

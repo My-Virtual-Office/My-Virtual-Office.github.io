@@ -38,6 +38,11 @@
       <div class="feature-text">
         <p>Nine independently deployable Spring Boot services on Java 21, one apiece per capability — identity, chat, rooms, workspaces, tasks, calendar, notifications, plus the AI assistant and the 2D-office server. No shared schema. No service holds a session; identity arrives as a trusted header the gateway injects on every request. Services talk to each other two ways: asynchronously through RabbitMQ when nothing needs to wait for an answer, synchronously through a locked-down internal API when one does.</p>
 
+        <figure class="arch-diagram wide">
+          <img src="../assets/diagrams/topology.svg" alt="System topology: clients through the gateway to nine services and their datastores" />
+          <figcaption>Every client enters through one gateway; every service owns its own store; events fan out over RabbitMQ.</figcaption>
+        </figure>
+
         <h3>Services and ports</h3>
         <table class="arch-table">
           <thead><tr><th>Service</th><th>Port</th><th>Datastore</th><th>Owns</th></tr></thead>
@@ -69,6 +74,13 @@
 
         <h3>The 2D office is a backend client, not a bolt-on</h3>
         <p>The browser client authenticates with the same JWT as the rest of the app, calls the gateway for workspace layout and desk data, and opens a STOMP connection directly to room-service for proximity voice. The Colyseus server verifies that JWT independently, then calls workspace-service's internal API to validate joins and persist presence. Identity, membership, presence, chat and voice for the office all run through the same backend as the web app — it was previously a standalone prototype; it isn't one now.</p>
+
+        <h3>Asynchronous integration: two consumers, everyone else produces</h3>
+        <p>Nothing that can wait blocks a request. Five services publish notification events into one exchange; workspace and room publish channel-lifecycle events into their own. Only two services consume — notifications and chat — and every event carries a unique id so a redelivery never double-fires.</p>
+        <figure class="arch-diagram wide">
+          <img src="../assets/diagrams/event-mesh.svg" alt="RabbitMQ event mesh: producers, exchanges, queues, and the two consumers" />
+          <figcaption>The RabbitMQ mesh — producers on the left, the two consumers (notifications, chat) on the right.</figcaption>
+        </figure>
       </div>
     </div>
 

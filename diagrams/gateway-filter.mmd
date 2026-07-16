@@ -1,0 +1,25 @@
+graph LR
+  IN([Incoming request]):::client
+  STRIP["1 · Strip<br/>client X-User-*"]:::step
+  BLOCK{"/api/internal/** ?"}:::decision
+  PUBLIC{"public path ?"}:::decision
+  JWT{"valid JWT ?"}:::decision
+  INJECT["Inject trusted<br/>X-User-Id / Role / Email"]:::good
+  SVC([Downstream service]):::svc
+  D403[403 blocked]:::bad
+  D401[401 unauthorized]:::bad
+
+  IN --> STRIP --> BLOCK
+  BLOCK -->|yes| D403
+  BLOCK -->|no| PUBLIC
+  PUBLIC -->|yes| SVC
+  PUBLIC -->|no| JWT
+  JWT -->|no| D401
+  JWT -->|yes| INJECT --> SVC
+
+  classDef client fill:#eaf3fb,stroke:#3a63c9,stroke-width:1.5px,color:#17181c;
+  classDef step fill:#f4f5f7,stroke:#9a9da6,stroke-width:1.5px,color:#17181c;
+  classDef decision fill:#fef3e6,stroke:#eb8829,stroke-width:1.5px,color:#17181c;
+  classDef good fill:#eef7ea,stroke:#4a9e2f,stroke-width:1.5px,color:#17181c;
+  classDef bad fill:#fdeaef,stroke:#e0355b,stroke-width:1.5px,color:#17181c;
+  classDef svc fill:#eef7ea,stroke:#4a9e2f,stroke-width:1.5px,color:#17181c;

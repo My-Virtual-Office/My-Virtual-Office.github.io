@@ -1,0 +1,37 @@
+graph LR
+  US[user]:::svc
+  WS[workspace]:::svc
+  TASK[tasks]:::svc
+  CAL[calendar]:::svc
+  CHATP[chat]:::svc
+  ROOM[room]:::svc
+
+  NX{{notifications.exchange}}:::exch
+  NQ[notifications.queue]:::queue
+  NS[notifications-service]:::consumer
+
+  US -->|signup / OTP / reset| NX
+  WS -->|workspace invite| NX
+  TASK -->|task assigned / reminder| NX
+  CAL -->|meeting reminder| NX
+  CHATP -->|mention| NX
+  NX --> NQ
+  NQ --> NS
+
+  WX{{workspace.exchange}}:::exch
+  WQ[workspace.channel.queue]:::queue
+  RX{{room.exchange}}:::exch
+  RQ[room.channel.queue]:::queue
+  CHATC[chat-service]:::consumer
+
+  WS -->|channel events| WX
+  WX --> WQ
+  WQ --> CHATC
+  ROOM -->|room events| RX
+  RX --> RQ
+  RQ --> CHATC
+
+  classDef svc fill:#eef7ea,stroke:#4a9e2f,stroke-width:1.5px,color:#17181c;
+  classDef exch fill:#fdeee2,stroke:#d9772a,stroke-width:1.5px,color:#17181c;
+  classDef queue fill:#f4f5f7,stroke:#9a9da6,stroke-width:1.5px,color:#17181c;
+  classDef consumer fill:#f0ebfa,stroke:#7c3aed,stroke-width:1.5px,color:#17181c;

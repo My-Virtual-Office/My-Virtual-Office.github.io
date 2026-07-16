@@ -1,0 +1,60 @@
+graph TD
+  Web([Web app]):::client
+  Mobile([Mobile app]):::client
+  Office([2D Office client]):::client
+
+  GW["Spring Cloud Gateway<br/>:8080"]:::gateway
+
+  Web -->|HTTPS + JWT| GW
+  Mobile -->|HTTPS| GW
+  Office -->|JWT| GW
+
+  US["user<br/>:8091"]:::svc
+  WS["workspace<br/>:8087"]:::svc
+  CHAT["chat<br/>:8084"]:::svc
+  TASK["tasks<br/>:8085"]:::svc
+  CAL["calendar<br/>:8083"]:::svc
+  ROOM["room<br/>:8086"]:::svc
+  NS["notifications<br/>:8082"]:::svc
+  AI["ai<br/>:8089"]:::svc
+
+  GW --> US
+  GW --> WS
+  GW --> CHAT
+  GW --> TASK
+  GW --> CAL
+  GW --> ROOM
+  GW --> NS
+  GW --> AI
+
+  MySQL[(MySQL)]:::db
+  PG[(PostgreSQL<br/>public / calendar / tasks)]:::db
+  Mongo[(MongoDB)]:::db
+  Redis[(Redis)]:::db
+  MQ{{RabbitMQ}}:::broker
+
+  US --- MySQL
+  WS --- PG
+  CAL --- PG
+  TASK --- PG
+  CHAT --- Mongo
+  ROOM --- Mongo
+  NS --- Mongo
+  CHAT --- Redis
+  ROOM --- Redis
+  NS --- Redis
+
+  US -. events .-> MQ
+  WS -. events .-> MQ
+  TASK -. events .-> MQ
+  CAL -. events .-> MQ
+  CHAT -. events .-> MQ
+  ROOM -. events .-> MQ
+  MQ -. consume .-> NS
+  MQ -. consume .-> CHAT
+
+  classDef client fill:#eaf3fb,stroke:#3a63c9,stroke-width:1.5px,color:#17181c;
+  classDef gateway fill:#fef3e6,stroke:#eb8829,stroke-width:2px,color:#17181c;
+  classDef svc fill:#eef7ea,stroke:#4a9e2f,stroke-width:1.5px,color:#17181c;
+  classDef db fill:#f4f5f7,stroke:#9a9da6,stroke-width:1.5px,color:#17181c;
+  classDef broker fill:#fdeee2,stroke:#d9772a,stroke-width:1.5px,color:#17181c;

@@ -1,0 +1,18 @@
+sequenceDiagram
+  participant C as Client
+  participant G as Gateway
+  participant U as user-service
+  participant S as any service
+
+  C->>G: POST /api/auth/login
+  G->>U: (public path) login
+  U-->>C: 200 { JWT(sub=email, userId) }
+
+  Note over C,S: later, an authenticated request
+
+  C->>G: GET /api/tasks (Bearer JWT, spoofed X-User-Id: 1)
+  G->>G: strip client X-User-* headers
+  G->>G: validate JWT (HS256)
+  G->>S: GET /api/tasks (X-User-Id: 64, X-User-Role: USER)
+  S->>S: read identity from trusted header
+  S-->>C: 200 (scoped to the real user)

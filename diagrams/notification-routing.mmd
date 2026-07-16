@@ -1,0 +1,29 @@
+graph LR
+  EVT([NotificationEvent<br/>with unique eventId]):::client
+  TYPE{"type ?"}:::decision
+
+  EMAIL["Email only"]:::email
+  INAPP["In-app only"]:::inapp
+  BOTH["In-app + email"]:::both
+
+  DEDUP["Redis dedup<br/>24h on eventId"]:::step
+  SMTP([SMTP]):::db
+  PUSH([Live WS push<br/>+ Mongo record]):::db
+
+  EVT --> TYPE
+  TYPE -->|signup / OTP / reset / invite| EMAIL
+  TYPE -->|task assigned / reminder / mention| INAPP
+  TYPE -->|meeting reminder| BOTH
+
+  EMAIL --> DEDUP --> SMTP
+  BOTH --> DEDUP
+  BOTH --> PUSH
+  INAPP --> PUSH
+
+  classDef client fill:#eaf3fb,stroke:#3a63c9,stroke-width:1.5px,color:#17181c;
+  classDef decision fill:#fef3e6,stroke:#eb8829,stroke-width:1.5px,color:#17181c;
+  classDef email fill:#eaf3fb,stroke:#3a63c9,stroke-width:1.5px,color:#17181c;
+  classDef inapp fill:#eef7ea,stroke:#4a9e2f,stroke-width:1.5px,color:#17181c;
+  classDef both fill:#f0ebfa,stroke:#7c3aed,stroke-width:1.5px,color:#17181c;
+  classDef step fill:#f4f5f7,stroke:#9a9da6,stroke-width:1.5px,color:#17181c;
+  classDef db fill:#f4f5f7,stroke:#9a9da6,stroke-width:1.5px,color:#17181c;
