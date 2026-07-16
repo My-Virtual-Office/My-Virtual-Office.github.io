@@ -14,8 +14,8 @@
   <ul class="nav-center">
     <li><a href="index.html">Home</a></li>
     <li><a class="on" href="features.html">Features</a></li>
-    <li><a href="features.html#security">Security</a></li>
-    <li><a href="features.html#mobile">Mobile</a></li>
+    <li><a href="chapters/security.html">Security</a></li>
+    <li><a href="chapters/mobile.html">Mobile</a></li>
     <li><a href="index.html#demo">Demo</a></li>
   </ul>
   <div class="nav-right">
@@ -26,313 +26,84 @@
 
 <main>
   <div class="doc-hero">
-    <h1>Every feature, with the real screenshot</h1>
-    <p>Nothing on this page is a mockup — every image is the actual product, captured from the running app. Where a screenshot doesn't exist yet, that's marked plainly instead of faked.</p>
-    <div class="toc">
-      <a href="#chat">Chat &amp; Channels</a>
-      <a href="#categories">Categories &amp; Permissions</a>
-      <a href="#voice">Voice Rooms</a>
-      <a href="#office">2D Office</a>
-      <a href="#tasks">Tasks</a>
-      <a href="#calendar">Calendar &amp; Meetings</a>
-      <a href="#people">People &amp; Teams</a>
-      <a href="#ai">AI Assistant</a>
-      <a href="#security">Security</a>
-      <a href="#observability">Observability</a>
-      <a href="#mobile">Mobile</a>
-      <a href="#design">Design System</a>
-    </div>
+    <h1>Every feature, one chapter at a time</h1>
+    <p>Twelve chapters, each with the real screenshot — nothing here is a mockup. Where a screenshot doesn't exist yet, that's marked plainly instead of faked.</p>
   </div>
 
-  <!-- ─── Chat ────────────────────────────────────────────────────────── -->
-  <section class="feature-section" id="chat">
-    <div class="feature-section-head">
+  <div class="chapter-grid">
+    <a class="chapter-card" href="chapters/chat.html">
       <span class="feature-icon">💬</span>
-      <h2>Chat, threads &amp; direct messages</h2>
+      <h3>Chat, threads &amp; direct messages</h3>
+      <p>Channels, threads and DMs, in three months of real seeded history.</p>
       <span class="feature-tag web">Web</span>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text">
-        <p>Channels, threads and DMs, built around real conversations rather than a demo with three test messages in it — the seeded workspace carries three months of history across 25 channels.</p>
-        <ul>
-          <li><b>Threads</b> keep a busy channel readable — replies branch off without burying the main feed.</li>
-          <li><b>Reactions, mentions and @-notify</b> work the way you'd expect from any team chat.</li>
-          <li><b>Search</b> finds a message by content, sender, or channel.</li>
-        </ul>
-      </div>
-      <div class="feature-media"><img src="assets/screenshots/chat.png" alt="A channel with messages and reactions" /></div>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text">
-        <p>Open any message into a thread without losing your place in the channel.</p>
-      </div>
-      <div class="feature-media"><img src="assets/screenshots/thread.png" alt="A thread panel open beside the channel" /></div>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text">
-        <p>Direct messages get their own space — and, unlike channels, they're end-to-end encrypted (see <a href="#security">Security</a>).</p>
-      </div>
-      <div class="feature-media"><img src="assets/screenshots/direct-message.png" alt="A direct message conversation" /></div>
-    </div>
-  </section>
-
-  <!-- ─── Categories & permissions ───────────────────────────────────── -->
-  <section class="feature-section" id="categories">
-    <div class="feature-section-head">
+    </a>
+    <a class="chapter-card" href="chapters/categories.html">
       <span class="feature-icon">🗂️</span>
-      <h2>Channel categories, with real permissions</h2>
+      <h3>Channel categories, with real permissions</h3>
+      <p>Voice and text organised together, with permissions that actually apply.</p>
       <span class="feature-tag web">Web</span>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text">
-        <p>A fresh workspace doesn't open as one flat list of 25 channels — it opens organised into categories, and voice rooms live <i>inside</i> those categories instead of a separate section at the bottom.</p>
-        <ul>
-          <li>Drag-free reorganising: pin a channel, move it between categories, or make your own category.</li>
-          <li><b>Category permissions</b> — set visibility and allowed teams once for a whole category; every channel in it can sync to that setting or override it individually.</li>
-          <li>One toggle hides every voice room at once, if you just want to see text channels.</li>
-        </ul>
-      </div>
-      <div class="feature-media"><img src="assets/screenshots/channel-categories.png" alt="Sidebar showing channels grouped into categories, with voice rooms inline" /></div>
-    </div>
-  </section>
-
-  <!-- ─── Voice ───────────────────────────────────────────────────────── -->
-  <section class="feature-section" id="voice">
-    <div class="feature-section-head">
+    </a>
+    <a class="chapter-card" href="chapters/voice.html">
       <span class="feature-icon">🎙️</span>
-      <h2>Voice rooms</h2>
+      <h3>Voice rooms</h3>
+      <p>Join a room in one click — no calendar invite required.</p>
       <span class="feature-tag web">Web</span>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text">
-        <p>Discord-style voice channels: click one to join, see who else is in it, and talk — no calendar invite required for a two-minute question.</p>
-      </div>
-      <div class="feature-media"><img src="assets/screenshots/voice-channel.png" alt="A voice room with connected members" /></div>
-    </div>
-  </section>
-
-  <!-- ─── 2D Office ───────────────────────────────────────────────────── -->
-  <section class="feature-section" id="office">
-    <div class="feature-section-head">
+    </a>
+    <a class="chapter-card" href="chapters/office.html">
       <span class="feature-icon">🧑‍💻</span>
-      <h2>A 2D office you can actually walk into</h2>
+      <h3>A 2D office you can actually walk into</h3>
+      <p>Real-time presence, proximity voice, and rooms with a purpose.</p>
       <span class="feature-tag web">Web</span>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text">
-        <p>Not decoration — the reason Slack and Teams still can't answer "is anyone free right now?". Everyone's avatar sits at their desk; walk up to someone and proximity voice connects automatically.</p>
-        <ul>
-          <li>Real-time presence for the whole floor, driven by a dedicated Colyseus server.</li>
-          <li>Dedicated rooms: a meeting room, the CEO's office, a chill zone — each with its own layout and rules.</li>
-          <li>Your calendar can set your status to "In a meeting" automatically while a busy event runs.</li>
-        </ul>
-      </div>
-      <div class="feature-media"><img src="assets/screenshots/2d-office-room.png" alt="The 2D office floor with avatars at their desks" /></div>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text"><p>See who's online before you even open a chat.</p></div>
-      <div class="feature-media"><img src="assets/screenshots/2d-presence.png" alt="Presence list showing who is currently online" /></div>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text"><p>Purpose-built rooms for the meetings that actually need a room.</p></div>
-      <div class="feature-media"><img src="assets/screenshots/2d-meeting-room.png" alt="A meeting room inside the 2D office" /></div>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text"><p>Even leadership gets a desk on the same floor.</p></div>
-      <div class="feature-media"><img src="assets/screenshots/2d-ceo-room.png" alt="The CEO's room inside the 2D office" /></div>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text"><p>And a place that's just for a break.</p></div>
-      <div class="feature-media"><img src="assets/screenshots/2d-chill-zone.png" alt="A chill zone room inside the 2D office" /></div>
-    </div>
-  </section>
-
-  <!-- ─── Tasks ───────────────────────────────────────────────────────── -->
-  <section class="feature-section" id="tasks">
-    <div class="feature-section-head">
+    </a>
+    <a class="chapter-card" href="chapters/tasks.html">
       <span class="feature-icon">✅</span>
-      <h2>Tasks, with human numbers</h2>
+      <h3>Tasks, with human numbers</h3>
+      <p>#42, not a UUID — a day-banded board that only shows what's ahead.</p>
       <span class="feature-tag web">Web</span>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text">
-        <p>Tasks are <code>#42</code>, not a UUID — a per-workspace running number, so "take a look at 42" means something in chat.</p>
-        <ul>
-          <li>A day-banded board: <b>Overdue</b>, then <b>Today</b>, then every day forward — infinite scroll, no clutter from past days that are already done.</li>
-          <li>Assign, prioritise, and due-date a task from a sentence via the AI assistant (see <a href="#ai">AI Assistant</a>).</li>
-          <li>Every status change and reminder is idempotent — nothing gets double-sent if a job retries.</li>
-        </ul>
-      </div>
-      <div class="feature-media"><img src="assets/screenshots/tasks.png" alt="The tasks board with Overdue, Today and upcoming bands" /></div>
-    </div>
-  </section>
-
-  <!-- ─── Calendar / meetings ─────────────────────────────────────────── -->
-  <section class="feature-section" id="calendar">
-    <div class="feature-section-head">
+    </a>
+    <a class="chapter-card" href="chapters/calendar.html">
       <span class="feature-icon">📅</span>
-      <h2>A shared team calendar</h2>
+      <h3>A shared team calendar</h3>
+      <p>Drag to create, repeat weekly, and a scheduler that updates your status.</p>
       <span class="feature-tag web">Web</span>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text">
-        <p>One calendar for the whole workspace, drag-to-create on the week grid, with a scheduler that reminds people and auto-updates status for a running meeting.</p>
-      </div>
-      <div class="feature-media"><img src="assets/screenshots/calendar.png" alt="The shared team calendar, week view" /></div>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text">
-        <p>Every meeting can carry a description and a join link, and can repeat weekly on whichever days you pick — for however many weeks you need.</p>
-        <ul>
-          <li>Repeat creates real, independent events up front (not a live recurrence rule) — editing one occurrence later never touches the others.</li>
-          <li>A reminder, a join link, and who's invited — all in one form.</li>
-        </ul>
-      </div>
-      <div class="feature-media"><img src="assets/screenshots/meeting-form.png" alt="The meeting editor with description, link and weekly repeat" /></div>
-    </div>
-  </section>
-
-  <!-- ─── People & Teams ──────────────────────────────────────────────── -->
-  <section class="feature-section" id="people">
-    <div class="feature-section-head">
+    </a>
+    <a class="chapter-card" href="chapters/people.html">
       <span class="feature-icon">👥</span>
-      <h2>People, and the teams they're on</h2>
+      <h3>People, and the teams they're on</h3>
+      <p>A searchable directory, grouped by who actually works together.</p>
       <span class="feature-tag web">Web</span>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text">
-        <p>A searchable directory of everyone in the workspace — filter by role, invite new people, and see who's actually active right now.</p>
-      </div>
-      <div class="feature-media"><img src="assets/screenshots/people.png" alt="The People directory" /></div>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text">
-        <p>Switch to <b>Teams</b> to see the same people grouped by who they actually work with — expand a team to see its members without leaving the page.</p>
-      </div>
-      <div class="feature-media"><img src="assets/screenshots/teams-panel.png" alt="The Teams view, with several teams expanded showing their members" /></div>
-    </div>
-  </section>
-
-  <!-- ─── AI Assistant ────────────────────────────────────────────────── -->
-  <section class="feature-section" id="ai">
-    <div class="feature-section-head">
+    </a>
+    <a class="chapter-card" href="chapters/ai.html">
       <span class="feature-icon">🤖</span>
-      <h2>An assistant that answers from real data</h2>
-      <span class="feature-tag backend">AI</span>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text">
-        <p>"Catch me up on #general", "what tasks am I assigned", "create a high-priority task for Karim" — the assistant calls the same APIs the browser does, with your token, so it can only ever see or do what you could do yourself. No service account, no privilege escalation.</p>
-        <ul>
-          <li>Real function-calling: it reads your actual unread messages, tasks and calendar — never invents an answer.</li>
-          <li>Runs through an OpenAI-compatible endpoint, so it isn't locked to one model provider.</li>
-        </ul>
-      </div>
-      <div class="feature-media">
-        <div class="shot-placeholder">
-          <span class="ph-badge">Screenshot needed</span>
-          <p>Drop a capture of the Assistant chat panel at<br><code>assets/screenshots/ai-assistant.png</code></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── Security ────────────────────────────────────────────────────── -->
-  <section class="feature-section" id="security">
-    <div class="feature-section-head">
-      <span class="feature-icon">🔒</span>
-      <h2>End-to-end encrypted direct messages</h2>
-      <span class="feature-tag backend">Security</span>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text">
-        <p>ECDH key exchange → AES-GCM, entirely in the browser. The server stores <code>vo1:&lt;iv&gt;:&lt;ciphertext&gt;</code> and nothing else — even a database dump reveals no message content.</p>
-        <ul>
-          <li>Honest trade-off: this covers DMs, not channels — channels still feed search and the AI assistant.</li>
-          <li>Known limits, stated plainly: one device per key, no forward secrecy, trust-on-first-use.</li>
-          <li>Identity is decided once, at the gateway — every downstream service trusts a header only the gateway can set.</li>
-        </ul>
-      </div>
-      <div class="feature-media">
-        <div class="shot-placeholder">
-          <span class="ph-badge">Screenshot needed</span>
-          <p>A terminal capture of <code>db.messages.find()</code> returning ciphertext goes well here — see <code>assets/screenshots/e2e-ciphertext.png</code></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── Observability ───────────────────────────────────────────────── -->
-  <section class="feature-section" id="observability">
-    <div class="feature-section-head">
-      <span class="feature-icon">📊</span>
-      <h2>Observability: knowing when it breaks</h2>
+      <h3>An assistant that answers from real data</h3>
+      <p>Function-calling with your own token — never invents an answer.</p>
       <span class="feature-tag backend">Backend</span>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text">
-        <p>Nine services means nine <code>docker logs</code> commands to check by hand — instead, every container ships logs to Loki and metrics to Prometheus, both in one Grafana dashboard.</p>
-      </div>
-      <div class="feature-media"><img src="assets/screenshots/observability-logs.png" alt="Grafana dashboard showing centralized logs and errors" /></div>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text">
-        <p>Logs say <i>what happened</i>. Metrics say <i>how often, and how slow</i> — request rates, error ratios and p95 latency per service.</p>
-      </div>
-      <div class="feature-media"><img src="assets/screenshots/observability-metrics.png" alt="Grafana dashboard showing service health metrics" /></div>
-    </div>
-  </section>
-
-  <!-- ─── Mobile ──────────────────────────────────────────────────────── -->
-  <section class="feature-section" id="mobile">
-    <div class="feature-section-head">
+    </a>
+    <a class="chapter-card" href="chapters/security.html" id="security">
+      <span class="feature-icon">🔒</span>
+      <h3>End-to-end encrypted direct messages</h3>
+      <p>ECDH + AES-GCM in the browser. The server stores ciphertext, nothing else.</p>
+      <span class="feature-tag backend">Backend</span>
+    </a>
+    <a class="chapter-card" href="chapters/observability.html">
+      <span class="feature-icon">📊</span>
+      <h3>Observability: knowing when it breaks</h3>
+      <p>Every log and metric from nine services, in one Grafana dashboard.</p>
+      <span class="feature-tag backend">Backend</span>
+    </a>
+    <a class="chapter-card" href="chapters/mobile.html" id="mobile">
       <span class="feature-icon">📱</span>
-      <h2>Mobile — the whole workspace, in a pocket</h2>
+      <h3>Mobile — the whole workspace, in a pocket</h3>
+      <p>Five tabs, one gateway, no separate mobile backend.</p>
       <span class="feature-tag mobile">Mobile</span>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text">
-        <p>Five tabs — Channels, DMs, Rooms, Workspace, Profile — talking to the exact same gateway, same JWT, same permissions as the browser. There is no separate mobile backend.</p>
-      </div>
-      <div class="feature-media"><img src="assets/screenshots/mobile-workspace.jpeg" alt="Mobile app workspace screen" /></div>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text"><p>Sign in with the same account you'd use on the web.</p></div>
-      <div class="feature-media"><img src="assets/screenshots/mobile-login.jpeg" alt="Mobile app login screen" /></div>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text"><p>Channels, browsed and created from the phone — they land in the same list the browser sees.</p></div>
-      <div class="feature-media"><img src="assets/screenshots/mobile-channels.jpeg" alt="Mobile app channels list" /></div>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text"><p>Direct messages, live — the same STOMP contract the browser uses.</p></div>
-      <div class="feature-media"><img src="assets/screenshots/mobile-dm.jpeg" alt="Mobile app direct message screen" /></div>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text"><p>Join a voice room straight from your pocket.</p></div>
-      <div class="feature-media"><img src="assets/screenshots/mobile-room.jpeg" alt="Mobile app rooms screen" /></div>
-    </div>
-  </section>
-
-  <!-- ─── Design system ───────────────────────────────────────────────── -->
-  <section class="feature-section" id="design">
-    <div class="feature-section-head">
+    </a>
+    <a class="chapter-card" href="chapters/design.html">
       <span class="feature-icon">🎨</span>
-      <h2>Designed deliberately, not decorated</h2>
-      <span class="feature-tag web">Design</span>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text">
-        <p>Every screen traces back to a user story from real research into remote-work pain, not to "it looked nice." Seven built-in themes share one architecture — only the core hue changes.</p>
-      </div>
-      <div class="feature-media"><img src="assets/screenshots/design-system.png" alt="The Figma design file, showing the component system" /></div>
-    </div>
-    <div class="feature-body">
-      <div class="feature-text"><p>Onboarding is two screens: sign up, land inside your workspace.</p></div>
-      <div class="feature-media"><img src="assets/screenshots/get-started.png" alt="The get-started / onboarding screen" /></div>
-    </div>
-  </section>
-
+      <h3>Designed deliberately, not decorated</h3>
+      <p>Every screen traces back to a user story, not to "it looked nice."</p>
+      <span class="feature-tag web">Web</span>
+    </a>
+  </div>
 </main>
 
 <footer>

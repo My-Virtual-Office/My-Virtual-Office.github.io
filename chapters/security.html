@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>End-to-end encrypted direct messages — Virtual Office</title>
+  <meta name="description" content="ECDH + AES-GCM in the browser. The server stores ciphertext, nothing else." />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html"><span class="dot"></span> Virtual Office</a>
+  <ul class="nav-center">
+    <li><a href="../index.html">Home</a></li>
+    <li><a class="on" href="../features.html">Features</a></li>
+    <li><a href="security.html">Security</a></li>
+    <li><a href="mobile.html">Mobile</a></li>
+    <li><a href="../index.html#demo">Demo</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="btn-nav-ghost" href="https://github.com/My-Virtual-Office" target="_blank" rel="noopener">GitHub</a>
+    <a class="btn-primary" href="../features.html">← All chapters</a>
+  </div>
+</nav>
+
+<main>
+  <div class="chapter-crumb"><a href="../features.html">Features</a> <span>/</span> End-to-end encrypted direct messages</div>
+
+  <section class="feature-section chapter-page" id="security">
+    <div class="feature-section-head">
+      <span class="feature-icon">🔒</span>
+      <h2>End-to-end encrypted direct messages</h2>
+      <span class="feature-tag backend">Backend</span>
+    </div>
+    <div class="feature-body">
+      <div class="feature-text">
+        <p>ECDH key exchange → AES-GCM, entirely in the browser. The server stores <code>vo1:&lt;iv&gt;:&lt;ciphertext&gt;</code> and nothing else — even a database dump reveals no message content.</p>
+        <ul>
+          <li>Honest trade-off: this covers DMs, not channels — channels still feed search and the AI assistant.</li>
+          <li>Known limits, stated plainly: one device per key, no forward secrecy, trust-on-first-use.</li>
+          <li>Identity is decided once, at the gateway — every downstream service trusts a header only the gateway can set.</li>
+        </ul>
+      </div>
+      <div class="feature-media">
+        <div class="shot-placeholder">
+          <span class="ph-badge">Screenshot needed</span>
+          <p>A terminal capture of <code>db.messages.find()</code> returning ciphertext goes well here — see <code>assets/screenshots/e2e-ciphertext.png</code></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Observability ───────────────────────────────────────────────── -->
+  
+  </section>
+
+  <div class="chapter-pager"><a class="chapter-pager-link prev" href="ai.html"><span class="cp-label">← Previous</span><span class="cp-title">An assistant that answers from real data</span></a><a class="chapter-pager-link next" href="observability.html"><span class="cp-label">Next →</span><span class="cp-title">Observability: knowing when it breaks</span></a></div>
+</main>
+
+<footer>
+  <span>Virtual Office — a graduation project.</span>
+  <span><a href="../index.html">Home</a> · <a href="../features.html">All chapters</a> · <a href="https://github.com/My-Virtual-Office" target="_blank" rel="noopener">GitHub</a></span>
+</footer>
+
+</body>
+</html>
