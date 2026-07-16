@@ -90,7 +90,7 @@ main { max-width: var(--max-w); margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px
   padding: clamp(48px, 8vw, 96px) 0 clamp(40px, 6vw, 72px);
   flex-wrap: wrap;
 }
-.hero-left { flex: 1 1 420px; max-width: 480px; }
+.hero-left { flex: 1 1 380px; max-width: 420px; }
 .eyebrow {
   display: inline-flex; align-items: center; gap: 7px;
   padding: 5px 12px; border-radius: 999px;
@@ -109,10 +109,14 @@ main { max-width: var(--max-w); margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px
 .hero-stat b { display: block; font-size: 22px; font-weight: 800; }
 .hero-stat span { font-size: 12.5px; color: var(--ink-2); font-weight: 600; }
 .hero-right {
-  /* This screenshot is the first thing anyone sees — it gets more of the row
-     than the text (flex-grow 1.6 vs hero-left's implicit 1) and a taller
-     minimum, instead of splitting the hero evenly. */
-  flex: 1.6 1 520px; min-width: 420px;
+  /* This screenshot is the first thing anyone sees — it gets most of the row,
+     not an even split with the text (hero-left is capped at 420px above).
+     flex-basis stays small on purpose: flex-wrap's line-fit test sums every
+     item's hypothetical size (~basis, floored by min-width) BEFORE grow is
+     applied — a large basis here summed with hero-left's and wrapped this
+     onto its own line, below the fold. min-width is the real floor; grow
+     does the enlarging. */
+  flex: 2.2 1 300px; min-width: 480px;
   border-radius: 16px; overflow: hidden;
   border: 1px solid var(--border); box-shadow: var(--shadow-lg);
 }
