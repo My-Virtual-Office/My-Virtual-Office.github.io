@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Virtual Office — one workspace for chat, tasks, meetings and your team</title>
+  <meta name="description" content="Virtual Office puts chat, tasks, meetings, an AI assistant and a real 2D office into one workspace — web, mobile and a place you can actually walk into." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html"><span class="dot"></span> Virtual Office</a>
+  <ul class="nav-center">
+    <li><a class="on" href="index.html">Home</a></li>
+    <li><a href="features.html">Features</a></li>
+    <li><a href="features.html#security">Security</a></li>
+    <li><a href="features.html#mobile">Mobile</a></li>
+    <li><a href="features.html#demo">Demo</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="btn-nav-ghost" href="https://github.com/My-Virtual-Office" target="_blank" rel="noopener">GitHub</a>
+    <a class="btn-primary" href="features.html">Explore features</a>
+  </div>
+</nav>
+
+<main>
+
+  <section class="hero">
+    <div class="hero-left">
+      <span class="eyebrow">● Built by a 6-person student team</span>
+      <h1 class="hero-title">One workspace.<br>Not <em>five</em> disconnected tools.</h1>
+      <p class="hero-subtitle">
+        Chat, tasks, meetings, a real-time 2D office and an AI assistant that actually
+        knows your workspace — in one place, on web and mobile. No app-switching,
+        no "who's even online right now."
+      </p>
+      <div class="hero-cta">
+        <a class="btn-primary" href="features.html">See every feature →</a>
+        <a class="btn-secondary" href="features.html#demo">Watch the demo</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><b>9</b><span>backend services</span></div>
+        <div class="hero-stat"><b>3</b><span>clients — web, mobile, 2D office</span></div>
+        <div class="hero-stat"><b>E2E</b><span>encrypted direct messages</span></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="assets/screenshots/chat.png" alt="Virtual Office chat, with a thread open" />
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Everything a remote team actually needs</h2>
+      <p>Not five features bolted together — one workflow. A message becomes a task, a task has a deadline, a deadline is a meeting, and the same people are in all three.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <h3>Chat, threads &amp; channels</h3>
+        <p>Channels, threads and DMs — organised into categories your team actually defines, not a flat list.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧑‍🤝‍🧑</div>
+        <h3>A real 2D office</h3>
+        <p>See who's at their desk, walk up, and talk — proximity voice, not a calendar invite for a 30-second question.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">✅</div>
+        <h3>Tasks that sync with your calendar</h3>
+        <p>Human task numbers, day-banded boards, and a scheduler that quietly sets your status to "In a meeting" for you.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3>An assistant that isn't a toy</h3>
+        <p>"Catch me up on #general" gets you a real answer from your actual unread messages — not a hallucination.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>End-to-end encrypted DMs</h3>
+        <p>Direct messages are encrypted in the browser. The server stores ciphertext — even we can't read them.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>A real mobile app</h3>
+        <p>Channels, DMs, rooms and your workspace — Flutter, talking to the exact same APIs as the browser.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Built on a real microservices backend</h2>
+      <p>Not a monolith with a nice UI in front. Independently deployable services, a real message broker, and dashboards that catch the bugs before your users do.</p>
+    </div>
+    <div class="strip">
+      <span>Spring Boot</span><span>Spring Cloud Gateway</span><span>React</span><span>Flutter</span>
+      <span>Phaser + Colyseus</span><span>PostgreSQL</span><span>MongoDB</span><span>MySQL</span>
+      <span>Redis</span><span>RabbitMQ</span><span>Docker Compose</span><span>Grafana + Loki + Prometheus</span>
+    </div>
+  </section>
+
+  <section id="demo">
+    <div class="section-head">
+      <h2>See it running</h2>
+      <p>A two-minute walkthrough: log in, chat, get caught up by the assistant, create a task, walk into the 2D office.</p>
+    </div>
+    <div class="demo-block">
+      <div class="demo-video-wrap">
+        <video controls poster="assets/screenshots/2d-office-room.png">
+          <source src="assets/demo/demo.mp4" type="video/mp4" />
+        </video>
+        <div class="demo-placeholder" id="demo-fallback">
+          <span class="ph-badge">Video coming soon</span>
+          <p>Drop the walkthrough at <code>doc/assets/demo/demo.mp4</code> — this player picks it up automatically, no HTML changes needed.</p>
+        </div>
+      </div>
+      <div class="demo-caption">
+        Expected file: <code>assets/demo/demo.mp4</code> — the poster frame above already shows.
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <h2>Fifteen people, six teams, three months of history —<br>seeded and ready to explore.</h2>
+    <p>Every screenshot on this site is the real product, not a mockup.</p>
+    <a class="btn-primary" href="features.html">Walk through every feature →</a>
+  </div>
+
+</main>
+
+<footer>
+  <span>Virtual Office — a graduation project.</span>
+  <span><a href="features.html">Features</a> · <a href="https://github.com/My-Virtual-Office" target="_blank" rel="noopener">GitHub</a></span>
+</footer>
+
+<script>
+  // If assets/demo/demo.mp4 doesn't exist yet, keep the placeholder overlay
+  // visible instead of showing a broken native video frame.
+  document.addEventListener('DOMContentLoaded', () => {
+    const video = document.querySelector('.demo-video-wrap video');
+    const fallback = document.getElementById('demo-fallback');
+    if (!video) return;
+    fetch(video.querySelector('source').src, { method: 'HEAD' })
+      .then((r) => { if (r.ok) fallback.style.display = 'none'; })
+      .catch(() => {});
+    video.addEventListener('error', () => { fallback.style.display = 'flex'; });
+  });
+</script>
+
+</body>
+</html>
