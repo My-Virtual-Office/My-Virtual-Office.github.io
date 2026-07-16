@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System architecture — Virtual Office</title>
+  <meta name="description" content="Nine independently deployable Spring Boot services, one gateway, database-per-service — the shape of the backend, not the marketing version of it." />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html"><span class="dot"></span> Virtual Office</a>
+  <ul class="nav-center">
+    <li><a href="../index.html">Home</a></li>
+    <li><a class="on" href="../features.html">Features</a></li>
+    <li><a href="security.html">Security</a></li>
+    <li><a href="mobile.html">Mobile</a></li>
+    <li><a href="../index.html#demo">Demo</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="btn-nav-ghost" href="https://github.com/My-Virtual-Office" target="_blank" rel="noopener">GitHub</a>
+    <a class="btn-primary" href="../features.html">← All chapters</a>
+  </div>
+</nav>
+
+<main>
+  <div class="chapter-crumb"><a href="../features.html">Features</a> <span>/</span> System architecture</div>
+
+  <section class="feature-section chapter-page" id="system-architecture">
+    <div class="feature-section-head">
+      <span class="feature-icon">🏗️</span>
+      <h2>System architecture</h2>
+      <span class="feature-tag backend">Backend</span>
+    </div>
+
+    <div class="feature-body">
+      <div class="feature-text">
+        <p>Nine independently deployable Spring Boot services on Java 21, one apiece per capability — identity, chat, rooms, workspaces, tasks, calendar, notifications, plus the AI assistant and the 2D-office server. No shared schema. No service holds a session; identity arrives as a trusted header the gateway injects on every request. Services talk to each other two ways: asynchronously through RabbitMQ when nothing needs to wait for an answer, synchronously through a locked-down internal API when one does.</p>
+
+        <h3>Services and ports</h3>
+        <table class="arch-table">
+          <thead><tr><th>Service</th><th>Port</th><th>Datastore</th><th>Owns</th></tr></thead>
+          <tbody>
+            <tr><td><b>gateway-api</b></td><td><code>8080</code></td><td>—</td><td>Routing, JWT validation, identity-header injection, CORS, blocks <code>/api/internal/**</code> at the edge.</td></tr>
+            <tr><td><b>user-service</b></td><td><code>8091</code></td><td>MySQL</td><td>Register/login, JWT issuance, profile, OTP + password reset.</td></tr>
+            <tr><td><b>workspace-service</b></td><td><code>8087</code></td><td>PostgreSQL <code>public</code></td><td>Workspaces, desks, teams, the 2D layout, invitations, presence.</td></tr>
+            <tr><td><b>chat-service</b></td><td><code>8084</code></td><td>MongoDB + Redis</td><td>Channels, DMs, threads, reactions, pins, attachments, @mentions.</td></tr>
+            <tr><td><b>tasks-service</b></td><td><code>8085</code></td><td>PostgreSQL <code>tasks</code></td><td>Team Spaces and the tasks that live in them, due-soon reminders.</td></tr>
+            <tr><td><b>calendar-service</b></td><td><code>8083</code></td><td>PostgreSQL <code>calendar</code></td><td>The shared team calendar, meeting reminders, auto-status.</td></tr>
+            <tr><td><b>room-service</b></td><td><code>8086</code></td><td>MongoDB + Redis</td><td>Voice/video rooms, presence, Agora tokens, proximity grouping.</td></tr>
+            <tr><td><b>notifications-service</b></td><td><code>8082</code></td><td>MongoDB + Redis</td><td>Consumes events, sends email, pushes in-app notifications live.</td></tr>
+            <tr><td><b>ai-service</b></td><td><code>8089</code></td><td>— (stateless)</td><td>Function-calling assistant; re-enters the platform on the caller's own token.</td></tr>
+          </tbody>
+        </table>
+
+        <h3>One instance, three schemas</h3>
+        <p>Calendar, tasks and workspace each get their own PostgreSQL <i>schema</i> rather than their own instance — <code>calendar</code>, <code>tasks</code> and <code>public</code>, each with an independent Flyway migration history. It's database-per-service in the way that matters (no service reads another's tables), running on hardware that doesn't need three Postgres containers to prove it.</p>
+
+        <h3>Deployment</h3>
+        <p>One parameterized Dockerfile builds any service — <code>--build-arg SERVICE=chat-service</code> produces a slim <code>eclipse-temurin:21-jre</code> image via a Maven multi-stage build. A single Docker Compose file wires all of it together: nine Spring services, MySQL, PostgreSQL, MongoDB, Redis, RabbitMQ, Loki/Promtail/Grafana/Prometheus, and both frontends — <code>docker compose up</code> is the entire deployment.</p>
+      </div>
+    </div>
+
+    <div class="feature-body">
+      <div class="feature-text">
+        <h3>Real-time, two different ways</h3>
+        <p>Chat, rooms and notifications run over STOMP-over-WebSocket — ordered, durable, stored. The 2D office runs on Colyseus, a separate real-time system built for high-frequency position updates that are never worth persisting. Different traffic, different guarantees, so it's two systems instead of one system straining to be both.</p>
+
+        <h3>The 2D office is a backend client, not a bolt-on</h3>
+        <p>The browser client authenticates with the same JWT as the rest of the app, calls the gateway for workspace layout and desk data, and opens a STOMP connection directly to room-service for proximity voice. The Colyseus server verifies that JWT independently, then calls workspace-service's internal API to validate joins and persist presence. Identity, membership, presence, chat and voice for the office all run through the same backend as the web app — it was previously a standalone prototype; it isn't one now.</p>
+      </div>
+    </div>
+
+    <div class="chapter-pager">
+      <a class="chapter-pager-link prev" href="../features.html"><span class="cp-label">← Previous</span><span class="cp-title">All chapters</span></a>
+      <a class="chapter-pager-link next" href="identity-security.html"><span class="cp-label">Next →</span><span class="cp-title">Identity &amp; security</span></a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>Virtual Office — one workspace for chat, tasks, meetings and your team.</span>
+  <span><a href="../index.html">Home</a> · <a href="../features.html">All chapters</a> · <a href="https://github.com/My-Virtual-Office" target="_blank" rel="noopener">GitHub</a></span>
+</footer>
+
+</body>
+</html>

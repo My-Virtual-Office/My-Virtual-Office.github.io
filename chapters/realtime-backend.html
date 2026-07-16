@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rooms & notifications — Virtual Office</title>
+  <meta name="description" content="How a voice room decides who hears whom, how Agora tokens get minted, and how nine notification types turn into an email or a live push — or both." />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html"><span class="dot"></span> Virtual Office</a>
+  <ul class="nav-center">
+    <li><a href="../index.html">Home</a></li>
+    <li><a class="on" href="../features.html">Features</a></li>
+    <li><a href="security.html">Security</a></li>
+    <li><a href="mobile.html">Mobile</a></li>
+    <li><a href="../index.html#demo">Demo</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="btn-nav-ghost" href="https://github.com/My-Virtual-Office" target="_blank" rel="noopener">GitHub</a>
+    <a class="btn-primary" href="../features.html">← All chapters</a>
+  </div>
+</nav>
+
+<main>
+  <div class="chapter-crumb"><a href="../features.html">Features</a> <span>/</span> Rooms &amp; notifications</div>
+
+  <section class="feature-section chapter-page" id="realtime-backend">
+    <div class="feature-section-head">
+      <span class="feature-icon">📡</span>
+      <h2>Rooms &amp; notifications</h2>
+      <span class="feature-tag backend">Backend</span>
+    </div>
+
+    <div class="feature-body">
+      <div class="feature-text">
+        <p>Room-service doesn't carry a single byte of audio or video — Agora does that. What it owns is the decision layer around a call: who's in which room, whether the room is full, what their mute state is, and — the part that makes the 2D office feel like a real place — which cluster of nearby avatars should actually hear each other.</p>
+
+        <h3>Presence lives in Redis, and only Redis</h3>
+        <p>A participant's mute/camera/screen-share state sits in a Redis hash, and a short-lived liveness key with a 30-second TTL, refreshed by a client heartbeat. Nothing about live presence touches a database — if a browser tab dies without saying goodbye, the liveness key simply expires and the next read quietly drops them. Joining a room runs one atomic Lua script, so two people racing for the last seat in a capped room can't both get in.</p>
+
+        <h3>Proximity voice, computed from positions</h3>
+        <p>The 2D client streams avatar positions; room-service clusters the ones within hearing range using union-find, and gives every cluster of two or more its own private Agora channel. Step out of range and the next snapshot recomputes the group — only the avatars whose group actually changed get told. A named zone (a meeting room, drawn on the floor plan) overrides open-area clustering entirely: step inside one and you join that zone's channel regardless of who's standing next to you.</p>
+      </div>
+    </div>
+
+    <div class="feature-body">
+      <div class="feature-text">
+        <h3>Notifications: nine event types, one decision per type</h3>
+        <p>Five services publish into a single notification pipeline, and every event carries a unique id so a retried delivery never sends twice. Each type gets exactly one routing decision, made once:</p>
+        <table class="arch-table">
+          <thead><tr><th>Event</th><th>Delivery</th></tr></thead>
+          <tbody>
+            <tr><td>Signup, OTP, password reset, workspace invite</td><td><b>Email only</b></td></tr>
+            <tr><td>Task assigned</td><td><b>In-app only</b></td></tr>
+            <tr><td>Task reminder, mention</td><td><b>In-app only</b></td></tr>
+            <tr><td>Meeting reminder</td><td><b>Both</b> — in-app and email</td></tr>
+          </tbody>
+        </table>
+        <div class="chapter-note"><b>Said plainly:</b> the routing table above has a spot reserved for a "login succeeded" email that nothing currently sends — the template and the route both exist, but no service publishes that event today. We'd rather say so than let the table imply more than the system does.</div>
+        <p>Email delivery is deduplicated in Redis against the event's id for 24 hours, and the claim is released if the send actually fails — so a retry gets a real second attempt instead of being silently swallowed by its own idempotency guard.</p>
+      </div>
+    </div>
+
+    <div class="chapter-pager">
+      <a class="chapter-pager-link prev" href="chat-service-architecture.html"><span class="cp-label">← Previous</span><span class="cp-title">Chat service, in detail</span></a>
+      <a class="chapter-pager-link next" href="../features.html"><span class="cp-label">Next →</span><span class="cp-title">All chapters</span></a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>Virtual Office — one workspace for chat, tasks, meetings and your team.</span>
+  <span><a href="../index.html">Home</a> · <a href="../features.html">All chapters</a> · <a href="https://github.com/My-Virtual-Office" target="_blank" rel="noopener">GitHub</a></span>
+</footer>
+
+</body>
+</html>

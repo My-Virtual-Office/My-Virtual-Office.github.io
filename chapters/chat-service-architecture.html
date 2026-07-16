@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat service, in detail — Virtual Office</title>
+  <meta name="description" content="Channels, DMs and rooms are one data model in MongoDB. Here's the schema, the real-time fan-out, and how a mention becomes a notification." />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html"><span class="dot"></span> Virtual Office</a>
+  <ul class="nav-center">
+    <li><a href="../index.html">Home</a></li>
+    <li><a class="on" href="../features.html">Features</a></li>
+    <li><a href="security.html">Security</a></li>
+    <li><a href="mobile.html">Mobile</a></li>
+    <li><a href="../index.html#demo">Demo</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="btn-nav-ghost" href="https://github.com/My-Virtual-Office" target="_blank" rel="noopener">GitHub</a>
+    <a class="btn-primary" href="../features.html">← All chapters</a>
+  </div>
+</nav>
+
+<main>
+  <div class="chapter-crumb"><a href="../features.html">Features</a> <span>/</span> Chat service, in detail</div>
+
+  <section class="feature-section chapter-page" id="chat-service-architecture">
+    <div class="feature-section-head">
+      <span class="feature-icon">🗄️</span>
+      <h2>Chat service, in detail</h2>
+      <span class="feature-tag backend">Backend</span>
+    </div>
+
+    <div class="feature-body">
+      <div class="feature-text">
+        <p>Chat-service owns every kind of conversation in the platform — group channels, DMs, and the chat panel behind a voice room — as one Mongo document model, not three. A channel's <code>type</code> is <code>GROUP</code>, <code>DIRECT</code>, or <code>ROOM</code>; everything downstream (threads, reactions, pins, read receipts) works the same way regardless of which kind you're in.</p>
+
+        <h3>Three collections, one shape</h3>
+        <ul>
+          <li><b>Channels</b> — a DM is keyed by <code>{min-userId}_{max-userId}</code> so the two participants always land on the same document, no matter who started it. A ROOM channel's Mongo <code>_id</code> is set equal to the room's id in room-service — one join, no lookup table. Every workspace gets two channels provisioned automatically: <code>#general</code> and a <code>#join</code> feed for who's arrived.</li>
+          <li><b>Messages</b> — reactions as a map of emoji to user ids, attachments backed by GridFS, and a captured <code>senderRole</code> so "an admin can't delete another admin's message" still holds even after someone's role changes later.</li>
+          <li><b>Threads</b> — flat, one level: channel → thread → messages. A thread doesn't nest inside another thread.</li>
+        </ul>
+
+        <h3>Two ways to reply, on purpose</h3>
+        <p><code>threadId</code> means the message lives in a thread panel. <code>replyToId</code> means it's an inline quote-reply, still in the main channel. They're not the same feature wearing two names — a thread branches the conversation; a reply just points backward in one.</p>
+      </div>
+    </div>
+
+    <div class="feature-body">
+      <div class="feature-text">
+        <h3>Real-time: one broadcast, not a fan-out guess</h3>
+        <p>Every mutation — a new message, an edit, a reaction, a pin, a delete — goes out over STOMP the moment it happens. A message inside a thread broadcasts <i>only</i> to that thread's topic; it doesn't also land in the channel feed and get filtered client-side. That sounds like a small distinction; it's the difference between a thread reply that never appears where it shouldn't, and one that flashes in the main channel for a frame before disappearing.</p>
+        <p>The WebSocket handshake can't carry an <code>Authorization</code> header — browsers don't allow it — so the client asks for a one-time Redis-backed ticket first, then presents it on connect. The ticket is consumed atomically on redemption, so two connections racing on the same ticket can't both get in.</p>
+
+        <h3>A mention is a message, once</h3>
+        <p>The client tells chat-service which user ids were mentioned; chat-service doesn't re-parse the text. One notification event goes out per mention, over RabbitMQ, and notifications-service turns it into whatever the recipient sees. Chat-service never emails anyone directly — it produces one event and moves on.</p>
+      </div>
+    </div>
+
+    <div class="feature-body">
+      <div class="feature-text">
+        <h3>Chat-service is a consumer too</h3>
+        <p>Create a workspace, and a listener provisions <code>#general</code> and <code>#join</code> without chat-service ever being asked directly — it hears the workspace-created event and acts on it. Create a voice room, and the matching chat channel appears the same way. The 2D office's in-world chat persists through this exact same pipeline: same channels, same history, same rules — not a separate chat system that happens to look similar.</p>
+      </div>
+    </div>
+
+    <div class="chapter-pager">
+      <a class="chapter-pager-link prev" href="identity-security.html"><span class="cp-label">← Previous</span><span class="cp-title">Identity &amp; security</span></a>
+      <a class="chapter-pager-link next" href="realtime-backend.html"><span class="cp-label">Next →</span><span class="cp-title">Rooms &amp; notifications</span></a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>Virtual Office — one workspace for chat, tasks, meetings and your team.</span>
+  <span><a href="../index.html">Home</a> · <a href="../features.html">All chapters</a> · <a href="https://github.com/My-Virtual-Office" target="_blank" rel="noopener">GitHub</a></span>
+</footer>
+
+</body>
+</html>

@@ -27,9 +27,10 @@
 <main>
   <div class="doc-hero">
     <h1>Every feature, one chapter at a time</h1>
-    <p>Twelve chapters, each with the real screenshot — nothing here is a mockup. Where a screenshot doesn't exist yet, that's marked plainly instead of faked.</p>
+    <p>Sixteen chapters, each with the real screenshot — nothing here is a mockup. Where a screenshot doesn't exist yet, that's marked plainly instead of faked.</p>
   </div>
 
+  <div class="chapter-group-label">Product</div>
   <div class="chapter-grid">
     <a class="chapter-card" href="chapters/chat.html">
       <span class="feature-icon">💬</span>
@@ -104,10 +105,38 @@
       <span class="feature-tag web">Web</span>
     </a>
   </div>
+
+  <div class="chapter-group-label">Architecture</div>
+  <div class="chapter-grid">
+    <a class="chapter-card" href="chapters/system-architecture.html">
+      <span class="feature-icon">🏗️</span>
+      <h3>System architecture</h3>
+      <p>Nine services, one gateway, database-per-service — the shape of the backend.</p>
+      <span class="feature-tag backend">Backend</span>
+    </a>
+    <a class="chapter-card" href="chapters/identity-security.html">
+      <span class="feature-icon">🛡️</span>
+      <h3>Identity &amp; security</h3>
+      <p>Identity decided once, at the gateway — and what we're honest about not solving yet.</p>
+      <span class="feature-tag backend">Backend</span>
+    </a>
+    <a class="chapter-card" href="chapters/chat-service-architecture.html">
+      <span class="feature-icon">🗄️</span>
+      <h3>Chat service, in detail</h3>
+      <p>Channels, DMs and rooms as one Mongo data model, with real-time fan-out that never over-broadcasts.</p>
+      <span class="feature-tag backend">Backend</span>
+    </a>
+    <a class="chapter-card" href="chapters/realtime-backend.html">
+      <span class="feature-icon">📡</span>
+      <h3>Rooms &amp; notifications</h3>
+      <p>How proximity voice is computed, and how nine event types become an email, a push, or both.</p>
+      <span class="feature-tag backend">Backend</span>
+    </a>
+  </div>
 </main>
 
 <footer>
-  <span>Virtual Office — a graduation project.</span>
+  <span>Virtual Office — one workspace for chat, tasks, meetings and your team.</span>
   <span><a href="index.html">Home</a> · <a href="https://github.com/My-Virtual-Office" target="_blank" rel="noopener">GitHub</a></span>
 </footer>
 

@@ -301,3 +301,41 @@ footer a:hover { color: var(--ink); }
   color: var(--ink-3);
 }
 .cp-title { font-size: 14px; font-weight: 700; color: var(--ink); }
+
+/* ── Architecture chapters: tables + inline code ──────────────────────────── */
+.arch-table {
+  width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 4px 0 20px;
+}
+.arch-table th {
+  text-align: left; padding: 9px 12px; background: var(--bg-2);
+  font-size: 11px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase;
+  color: var(--ink-3); border-bottom: 1px solid var(--border);
+}
+.arch-table td {
+  padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--ink-2);
+  vertical-align: top;
+}
+.arch-table tr:last-child td { border-bottom: none; }
+.arch-table td code, .feature-text code, .chapter-note code {
+  font-size: 12.5px; background: var(--bg-2); border: 1px solid var(--border);
+  border-radius: 4px; padding: 1px 5px; color: var(--ink);
+}
+.arch-table td b { color: var(--ink); }
+
+.chapter-note {
+  border: 1px solid var(--amber-line); background: var(--amber-soft);
+  border-radius: 10px; padding: 14px 16px; font-size: 13.5px; color: var(--ink-2);
+  margin: 4px 0 20px;
+}
+.chapter-note b { color: var(--amber-ink); }
+
+.feature-text h3 {
+  font-size: 15px; font-weight: 800; margin: 22px 0 8px; color: var(--ink);
+}
+.feature-text h3:first-child { margin-top: 0; }
+
+.chapter-group-label {
+  font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--ink-3); margin: 36px 0 14px;
+}
+.chapter-group-label:first-of-type { margin-top: 8px; }

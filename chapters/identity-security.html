@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Identity & security — Virtual Office</title>
+  <meta name="description" content="One gateway is the trust boundary for nine services. Here's exactly how identity is decided, and what we're honest about not having solved yet." />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html"><span class="dot"></span> Virtual Office</a>
+  <ul class="nav-center">
+    <li><a href="../index.html">Home</a></li>
+    <li><a class="on" href="../features.html">Features</a></li>
+    <li><a href="security.html">Security</a></li>
+    <li><a href="mobile.html">Mobile</a></li>
+    <li><a href="../index.html#demo">Demo</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="btn-nav-ghost" href="https://github.com/My-Virtual-Office" target="_blank" rel="noopener">GitHub</a>
+    <a class="btn-primary" href="../features.html">← All chapters</a>
+  </div>
+</nav>
+
+<main>
+  <div class="chapter-crumb"><a href="../features.html">Features</a> <span>/</span> Identity &amp; security</div>
+
+  <section class="feature-section chapter-page" id="identity-security">
+    <div class="feature-section-head">
+      <span class="feature-icon">🛡️</span>
+      <h2>Identity &amp; security</h2>
+      <span class="feature-tag backend">Backend</span>
+    </div>
+
+    <div class="feature-body">
+      <div class="feature-text">
+        <p>Identity is decided exactly once, at the edge. The gateway is the only thing on the network that gets to say who you are — every service behind it just believes the header it's handed, because nothing else is allowed to set that header.</p>
+
+        <h3>What the gateway does on every request</h3>
+        <ul>
+          <li><b>Strips</b> any client-supplied <code>X-User-Id</code>, <code>X-User-Role</code>, <code>X-User-Email</code> — a client claiming to be someone else gets overwritten, not trusted.</li>
+          <li><b>Blocks <code>/api/internal/**</code> with a 403</b> at the edge — the internal API service-to-service calls use is unreachable from outside, full stop.</li>
+          <li><b>Validates the JWT</b> (HS256, shared secret with user-service) and, on success, injects <code>X-User-Id</code>, <code>X-User-Role</code> and <code>X-User-Email</code> as headers a downstream service can actually trust — because it now knows nothing else could have set them.</li>
+          <li>A short allowlist of paths (login, OTP, the WebSocket handshakes) pass through unauthenticated, still stripped of any spoofed header.</li>
+        </ul>
+        <p>Downstream, every service reads identity through one small helper that pulls <code>X-User-Id</code> off the request — no service parses a JWT, no service owns a session. If the header's missing or malformed, that's a 401 or 400 before any business logic runs.</p>
+      </div>
+    </div>
+
+    <div class="feature-body">
+      <div class="feature-text">
+        <h3>Two kinds of authorization</h3>
+        <p>The gateway proves <i>who you are</i>. It doesn't know if you're allowed to do the thing you're asking for — that's workspace-scoped, and it's checked by the service that owns the resource. Chat asks workspace-service "is this user a member, and what's their role?" before it lets you create a channel. Calendar does the same before it lets you edit someone else's event. There's no platform-wide admin role baked into the JWT — <code>X-User-Role</code> is always the constant <code>USER</code>; every real permission decision happens per-workspace.</p>
+
+        <h3>The internal API</h3>
+        <p>Some checks have to be synchronous — a chat message can't wait for an event queue to confirm the sender is still a member. Those calls go over a locked-down internal API, guarded by a shared <code>X-Internal-Token</code> header and blocked at the gateway so it's server-to-server only. Callers fail <i>closed</i>: if workspace-service is unreachable, the answer is 503, never an implicit yes.</p>
+      </div>
+    </div>
+
+    <div class="feature-body">
+      <div class="feature-text">
+        <h3>Where we've drawn the line, honestly</h3>
+        <p>A symmetric JWT secret is shared across the gateway, user-service, and the 2D office's Colyseus server — whoever holds it can mint a token. That's a real trade-off, not an oversight: moving to asymmetric signing (RS256 + JWKS) is the obvious next step, and we're saying so here instead of pretending the current setup is the final answer.</p>
+        <p>Every credential this system needs — the JWT secret, database passwords, the Agora certificate, the SMTP password — is read from the environment, not committed to the repository. The deployment script that packages a release generates fresh infrastructure secrets per machine; nothing ships with a real credential baked in.</p>
+      </div>
+    </div>
+
+    <div class="chapter-pager">
+      <a class="chapter-pager-link prev" href="system-architecture.html"><span class="cp-label">← Previous</span><span class="cp-title">System architecture</span></a>
+      <a class="chapter-pager-link next" href="chat-service-architecture.html"><span class="cp-label">Next →</span><span class="cp-title">Chat service, in detail</span></a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>Virtual Office — one workspace for chat, tasks, meetings and your team.</span>
+  <span><a href="../index.html">Home</a> · <a href="../features.html">All chapters</a> · <a href="https://github.com/My-Virtual-Office" target="_blank" rel="noopener">GitHub</a></span>
+</footer>
+
+</body>
+</html>
