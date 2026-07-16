@@ -2,22 +2,25 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* Bright "Daylight" palette — same values as the product's own default theme
-   (website/src/theme/themes.css), so the docs read as the same product, not a
-   generic template with the logo swapped in. */
+/* Bright "Harbor" palette — the same values as the product's Harbor theme
+   (website/src/theme/themes.css: --accent #1668c9 on the #08203c navy rail), so
+   the docs read as the same product the screenshots are captured in, not a
+   generic template with the logo swapped in. The accent variables keep their
+   historical --amber-* names to avoid churning every rule that references them;
+   only the values are Harbor blue now. */
 :root {
   --bg:        #ffffff;
-  --bg-2:      #f4f5f7;
-  --bg-3:      #eef0f3;
+  --bg-2:      #eff3f9;   /* Harbor sidebar-bg */
+  --bg-3:      #e2e9f3;   /* Harbor sidebar-hover */
   --border:    #e7e7e9;
-  --border-2:  #dcdfe3;
+  --border-2:  #d3dced;   /* Harbor badge-bg */
   --ink:       #17181c;
   --ink-2:     #5f6169;
   --ink-3:     #9a9da6;
-  --amber:     #eb8829;
-  --amber-ink: #6a3c0f;
-  --amber-soft:rgba(235,136,41,0.10);
-  --amber-line:rgba(235,136,41,0.35);
+  --amber:     #1668c9;   /* Harbor --accent */
+  --amber-ink: #0e3f7e;   /* readable on --amber-soft */
+  --amber-soft:rgba(22,104,201,0.10);
+  --amber-line:rgba(22,104,201,0.32);
   --teal:      #1a9e8f;
   --danger:    #e0355b;
   --code-bg:   #17181c;
@@ -71,10 +74,10 @@ nav {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 10px 18px; border-radius: 9px;
   background: var(--amber); color: #fff; font-weight: 700; font-size: 14px;
-  box-shadow: 0 6px 16px rgba(235,136,41,0.35);
+  box-shadow: 0 6px 16px rgba(22,104,201,0.35);
   transition: transform .15s, box-shadow .15s;
 }
-.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(235,136,41,0.45); }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(22,104,201,0.45); }
 .btn-secondary {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 10px 18px; border-radius: 9px; border: 1px solid var(--border-2);
@@ -139,6 +142,15 @@ section { padding: clamp(40px, 6vw, 72px) 0; }
   width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center;
   background: var(--amber-soft); color: var(--amber-ink); margin-bottom: 14px;
 }
+/* 3D emoji variant: Microsoft Fluent 3D emoji carry their own light and shading,
+   so they sit on nothing rather than in a tinted chip — the glossy render is the
+   icon. Slightly larger than the glyph box it replaces. */
+.feature-icon.i3d {
+  background: transparent; width: 42px; height: 42px; border-radius: 0;
+  filter: drop-shadow(0 2px 4px rgba(23,24,28,0.14));
+}
+.feature-icon.i3d img { width: 100%; height: 100%; object-fit: contain; }
+.feature-section-head .feature-icon.i3d { width: 40px; height: 40px; }
 .feature-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
 .feature-card p { font-size: 13.5px; color: var(--ink-2); }
 
@@ -173,7 +185,7 @@ section { padding: clamp(40px, 6vw, 72px) 0; }
 /* CTA band */
 .cta-band {
   border-radius: 20px; padding: clamp(36px, 6vw, 56px); text-align: center;
-  background: linear-gradient(135deg, var(--amber) 0%, #f0a13f 100%);
+  background: linear-gradient(135deg, #08203c 0%, var(--amber) 100%);
   color: #fff; margin: 20px 0 60px;
 }
 .cta-band h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; margin-bottom: 12px; }
