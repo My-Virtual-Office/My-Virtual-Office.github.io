@@ -108,7 +108,7 @@
   <section id="demo">
     <div class="section-head">
       <h2>See it running</h2>
-      <p>A two-minute walkthrough: log in, chat, get caught up by the assistant, create a task, walk into the 2D office.</p>
+      <p>A ~2½-minute tour of the running product — messaging, categories, voice, the AI assistant, tasks, meetings, your desk, and a live 2D office with real people moving.</p>
     </div>
     <div class="demo-block">
       <div class="demo-video-wrap">
@@ -121,7 +121,7 @@
         </div>
       </div>
       <div class="demo-caption">
-        A 60-second tour of the running product — login, chat, the AI assistant, tasks, teams, and the 2D office.
+        The full walkthrough: login · chat with reactions, threads &amp; scheduled send · channel categories &amp; permissions · voice · the AI assistant answering live · tasks · meetings · My Desk · teams · and the live 2D office.
       </div>
     </div>
   </section>
@@ -140,15 +140,13 @@
 </footer>
 
 <script>
-  // If assets/demo/demo.mp4 doesn't exist yet, keep the placeholder overlay
-  // visible instead of showing a broken native video frame.
+  // The walkthrough is committed, so the poster shows by default; the overlay
+  // only appears if the video genuinely fails to play.
   document.addEventListener('DOMContentLoaded', () => {
     const video = document.querySelector('.demo-video-wrap video');
     const fallback = document.getElementById('demo-fallback');
-    if (!video) return;
-    fetch(video.querySelector('source').src, { method: 'HEAD' })
-      .then((r) => { if (r.ok) fallback.style.display = 'none'; })
-      .catch(() => {});
+    if (!video || !fallback) return;
+    fallback.style.display = 'none';
     video.addEventListener('error', () => { fallback.style.display = 'flex'; });
   });
 </script>
